@@ -39,6 +39,7 @@ tpl "$DIR/php-fpm.conf" "$PHP_FPM_CONF"
 # Build the default nginx config files.
 tpl "$DIR/nginx.conf" "$DIR/nginx/nginx.conf"
 tpl "$DIR/fastcgi_params" "$DIR/nginx/fastcgi_params"
+rm $DIR/nginx/sites-enabled/*
 tpl "$DIR/001-api.shwrm.net" "$DIR/nginx/sites-enabled/001-api.shwrm.net"
 
 # Start nginx.
