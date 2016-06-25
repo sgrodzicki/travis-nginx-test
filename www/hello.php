@@ -1,3 +1,3 @@
 <?php
 
-echo "Hello world!\n";
+echo phpversion() . PHP_EOL;
