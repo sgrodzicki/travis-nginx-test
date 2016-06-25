@@ -27,32 +27,19 @@ mkdir "$DIR/nginx/sites-enabled"
 mkdir "$DIR/var"
 
 # Configure the PHP handler.
-if [ "$PHP_VERSION" = 'hhvm' ] || [ "$PHP_VERSION" = 'hhvm-nightly' ]
-then
-    HHVM_CONF="$DIR/nginx/hhvm.ini"
+PHP_FPM_BIN="$HOME/.phpenv/versions/$PHP_VERSION/sbin/php-fpm"
+PHP_FPM_CONF="$DIR/nginx/php-fpm.conf"
 
-    tpl "$DIR/hhvm.tpl.ini" "$HHVM_CONF"
+# Build the php-fpm.conf.
+tpl "$DIR/php-fpm.conf" "$PHP_FPM_CONF"
 
-    cat "$HHVM_CONF"
-
-    hhvm \
-        --mode=daemon \
-        --config="$HHVM_CONF"
-else
-    PHP_FPM_BIN="$HOME/.phpenv/versions/$PHP_VERSION/sbin/php-fpm"
-    PHP_FPM_CONF="$DIR/nginx/php-fpm.conf"
-
-    # Build the php-fpm.conf.
-    tpl "$DIR/php-fpm.tpl.conf" "$PHP_FPM_CONF"
-
-    # Start php-fpm
-    "$PHP_FPM_BIN" --fpm-config "$PHP_FPM_CONF"
-fi
+# Start php-fpm
+"$PHP_FPM_BIN" --fpm-config "$PHP_FPM_CONF"
 
 # Build the default nginx config files.
-tpl "$DIR/nginx.tpl.conf" "$DIR/nginx/nginx.conf"
-tpl "$DIR/fastcgi.tpl.conf" "$DIR/nginx/fastcgi.conf"
-tpl "$DIR/default-site.tpl.conf" "$DIR/nginx/sites-enabled/default-site.conf"
+tpl "$DIR/nginx.conf" "$DIR/nginx/nginx.conf"
+tpl "$DIR/fastcgi_params" "$DIR/nginx/fastcgi_params"
+tpl "$DIR/001-api.shwrm.net" "$DIR/nginx/sites-enabled/001-api.shwrm.net"
 
 # Start nginx.
 nginx -c "$DIR/nginx/nginx.conf"
