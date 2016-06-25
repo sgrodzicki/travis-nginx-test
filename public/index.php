@@ -5,3 +5,5 @@ if (isset($_SERVER['APPLICATION_ENVIRONMENT'])) {
 } else {
     echo 'NONE' . PHP_EOL;
 }
+
+echo phpversion() . PHP_EOL;

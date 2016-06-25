@@ -17,8 +17,6 @@ addons:
     packages:
       - nginx
       - realpath
-    hosts:
-      - api.shwrm.net
 install:
 #  - composer install
   - travis/install-nginx.sh
