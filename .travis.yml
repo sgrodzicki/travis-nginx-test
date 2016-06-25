@@ -25,4 +25,5 @@ install:
 
 script:
   - curl -vsf 'http://localhost:8080' &> /dev/stdout
+  - curl -vsf 'http://api.shwrm.net:8080/settings/version' &> /dev/stdout
   - cat /tmp/error.log
